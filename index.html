@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>Gems For Gaben</title>
+		<script type="text/javascript" src="lib/crafty-min.js"></script>
+		<script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="src/globals.js"></script>
+		<script type="text/javascript" src="src/ajax.js"></script>
+		<script type="text/javascript" src="src/game.js"></script>
+		<script type="text/javascript" src="src/helper.js"></script>
+		<script type="text/javascript" src="src/loader.js"></script>
+		<script type="text/javascript" src="src/buttonFunctions.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<!-- Sean Wilson, Maninder Pabla -->
+	</head>
+	
+	<body>
+		<header><img src="assets/GemsForGaben.png" /></header>
+		
+		<br />
+		
+		<div id="gameContainer">
+			<div id="game"></div>
+			
+			<br />
+			
+			<div id="stuff">
+				<div id="scoreContainer">
+					<p id="score">0</p>
+				</div>
+				
+				<div id="optionsContainer">
+					<div id="scoreSubmitContainer">
+						Name: <input type="text" id="scoreSubmitName" /><br />
+						<input type="button" value="Submit!" onclick="btnSubmitScore();" /><br />
+					</div>
+					<br />
+					<input type="button" value="Restart" onclick="btnRestart();" />
+					<input type="button" value="Options" onclick="btnOptions();"/>
+					<div id="options">
+						Difficulty: 
+						<select id="ddDifficulty">
+							<option value="0">Baby Mode</option>
+							<option value="1">Simple</option>
+							<option value="2">Trying</option>
+							<option value="3">Formidable</option>
+						</select>
+						<input type="button" value="Set" onclick="btnChangeDifficulty();" /><br />
+						Fall Speed:
+						<select id="ddFallSpeed">
+							<option value="10">Hyper</option>
+							<option value="75">Speedy</option>
+							<option value="200">Default</option>
+							<option value="300">Relaxed</option>
+							<option value="400">Chill</option>
+							<option value="800">Tranquil</option>
+						</select>
+						<input type="button" value="Set" onclick="btnChangeFallSpeed();" /><br />
+						<input type="button" value="Toggle Sound" onclick="btnToggleSound();" /><input type="button" value="Toggle Particles" onclick="btnToggleParticles();" /><input type="button" value="Toggle Break Mode" onclick="btnToggleGameMode();" />
+					</div>
+				</div>
+				
+				<br />
+				
+				<a href="documentation.html">How to play?</a> - <a href="leaderboards.php?difficulty=2">Leaderboards</a>
+			</div>
+		</div>
+		
+		<script>
+			window.onload = function() {
+				$("#options").slideToggle(0);
+				$("#scoreSubmitContainer").slideToggle(0);
+				// oooOOooooOooooOooo a loading loader how fancy
+				Loader.load();
+			};
+		</script>
+		
+		<br /><br /><br /><br /><br /><br />
+		<footer id="footer">Credits to: <a href="https://dl.dropboxusercontent.com/u/32282632/Portfolio/index.html">Sean</a>, Maninder, <a href="http://opengameart.org/content/puzzle-game-art">Kenney (Kenney.nl)</a>, <a href="http://opengameart.org/content/completion-sound">Brandon Morris</a>, <a href="http://craftyjs.com/">Crafty.js</a><br />
+		This game uses HTML5, you must use an HTML5-compatible browser to play it (not Internet Explorer)</footer>
+		<script type="text/javascript" src="src/randomFlatBackground.js"></script>
+	</body>
+</html>

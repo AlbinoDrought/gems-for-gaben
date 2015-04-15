@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<title>Adv Web</title>
+		<script type="text/javascript" src="lib/crafty-min.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	
+	<body>
+		<header><img src="assets/GemsForGaben.png" onclick="window.location.href = 'index.html';"/></header>
+		
+		<div id="stuff">
+			<h3>Team:</h3>
+			<p>
+				Sean<br />
+				Maninder
+			</p>
+			
+			<h3>How to play:</h3>
+			<p>
+				<ul>
+					<li>Drag gems on the playing field to other squares to swap them.</li>
+					<li>Swap gems to get at least three in a row to gain points.</li>
+					<li>You are limited by the amount of moves you make.</li>
+				</ul>
+				
+				When you run out of moves, you can submit your score to the leaderboards.
+			</p>
+			
+			<h3>Short Documentation:</h3>
+			<p>
+				<code style="line-height: 150%">
+					Loader.js loads sprites, sounds, and then starts the game<br />
+					The board is completely random each time. It is ensured that no matches exist on the board at the start of the game.<br />
+					When a gem is swapped, it follows this order:
+					<ol>
+						<li>Remove control from user</li>
+						<li>Check if new locations have any matches, <b>if not unswap</b></li>
+						<li>Clear matches from board</li>
+						<li>Make gems fall down</li>
+						<li>Check matches on board</li>
+						<li>Repeat at step #3 until there are no matches left</li>
+					</ol>
+					Sounds played are based on the current combo. As of now there are only 3 different sounds, varied in pitch and tempo.
+				</code>
+			</p>
+			
+			<h3>Documentation:</h3>
+			<p>
+				<code style="line-height: 150%">
+				<u>Loader.js__</u><br />
+				Loader.js loads all sprites, sounds, and then calls <b>Game.start()</b> when done<br />
+				
+				<br /><br /><u>Game.js__</u><br />
+				<b>Game.start()</b> resets variables (in case it was just reset), and registers appropriate event handlers for gem swaps<br />
+				When a gem swap occurs, <b>GemMouseUp()</b> is called. This detects what gem called it and where the gem should swap to.<br />
+				If this is alright, it calls <b>swapGemPositions([x,y] of gem one, [x,y] of gem two)</b><br />
+				
+				<b>swapGemPositions</b> applies an animation (tween) to both swapping gems and waits for them to finish using a callback (<b>swapGemPositionsCallback</b>)<br />
+				<b>swapGemPositionsCallback</b> moves the gems to their new positions on the grid. It checks to see if there are any matches for either gem<br />
+				
+				<i>If matches exist:</i>
+				<ul>
+					<li>Explode all matches (<b>clearMatches(matches)</b>)</li>
+					<li>Fall all matched columns (<b>fallColumns(columns to fall)</b>)</li>
+				</ul>
+				<i>If matches don't exist:</i>
+				<ul>
+					<li>Undo tween animation</li>
+				</ul>
+				
+				<b>clearMatches</b> goes through each match, adds the column to a list, and then kills the gem (explodes, create particle effect, adds to score)<br />
+				<b>fallMatches</b> goes through each column starting at the bottom. When it moves up, it checks if the current spot on the grid is null (needs to fall)<br />
+				
+				If so, it:
+				<ul>
+					<li>Gets a gem that is applicable for the spot (<b>getGemToFall</b>)</li>
+					<li>Sets the applicable gem's new spot on the grid so it is not over-written</li>
+					<li>Animates the gem to the new position and waits for it to finish (<b>gemFallCallback</b>)</li>
+				</ul>
+				Otherwise, it continues going up until it is out of the grid.<br />
+				
+				<b>getGemToFall</b> starts at a given position and goes up until it finds a spot in the grid that is not null. It returns this gem.<br />
+				<b>gemFallCallback</b> confirms the grid position and screen position, and calls <b>gemsFinishedFalling</b> if all gems are finished falling<br />
+				<b>gemsFinishedFalling</b> calls <b>checkBoard</b>
+				<b>checkBoard</b> goes through each gem on the board (grid), and if it has at least 2 matches (3-in-a-row) it clears those matches, starting back at swapGemPositionsCallback.<br />
+				If <b>checkBoard</b> finds no matches, control is returned to the user and they can make another move.
+				
+				<br /><br /><u>Globals.js__</u><br />
+				<b>Globals.js</b> contains global variables used across the code, including options and the grid of gems<br />
+				
+				<br /><br /><u>Helper.js__</u><br />
+				<b>Helper.js</b> initializes the Crafty.js classes (Gem, GemDrag, Selector, HotSelector, Playspace) and contains the <b>particleExplosion</b> function
+				</code>
+			</p>
+		</div>
+		<br /><br /><br />
+		<footer id="footer"><a href="index.html">Back to the game</a></footer>
+		<script type="text/javascript" src="src/randomFlatBackground.js"></script>
+	</body>
+</html>
